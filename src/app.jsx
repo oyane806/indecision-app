@@ -1,3 +1,8 @@
+import React from "react";
+import ReactDOM from "react-dom";
+import AddOption from "./components/AddOption.jsx";
+import Option from "./components/Option.jsx";
+
 class IndecisionApp extends React.Component {
     constructor(props) {
         super(props);
@@ -136,57 +141,35 @@ const Options = (props) => {
     );
 };
 
-const Option = (props) => {
-    return (
-        <div>
-            {props.optionText}
-            <button 
-            onClick={(e) => {
-                props.handleDeleteOption(props.optionText);
-                // Here we need to pass explicitly the text to this function
-                // Otherwise, automatically, that is the event that is passed
-            }}
-            >
-            remove
-            </button>
-            </div>
-    );
-};
-
-class AddOption extends React.Component {
-    // Here we have 2 different methods:
-    // one coming from here
-    // one coming from the top this.props.handleAddOption
-    constructor(props) {
-        super(props);
-        this.handleAddOption = this.handleAddOption.bind(this);
-        this.state = {
-            error: undefined
-        };
-    }
-    handleAddOption(e) {
-        e.preventDefault();
-        const option = e.target.elements.option.value.trim();
-        const error = this.props.handleAddOption(option);
-        // Above will return undefined if error
-
-        this.setState(() => ({ error }));
-
-        if (!error) {
-            e.target.elements.option.value = "";
-        }
-    }
-    render() {
-        return (
-            <div>
-                {this.state.error && <p>{this.state.error}</p>}
-                <form onSubmit={this.handleAddOption}>
-                <input type="text" name="option"></input>
-                <button>Add option</button>
-                </form>
-            </div>
-        );
-    }
-}
 
 ReactDOM.render(<IndecisionApp options={["option1", "option2"]} />, document.getElementById("app"));
+
+
+
+
+// // import "./utils.jsx"
+// // It executes but I cannot call functions
+// // When big thing, import as default
+// import subtract, { square, add } from "./utils.jsx"
+// console.log("test");
+
+// console.log(square(4));
+
+// console.log(add(3, 100));
+
+// console.log(subtract(10, 2));
+
+// // Import third-party libraries
+// // install => import => use
+
+// import validator from "validator";
+
+// console.log(validator.isEmail("test"));
+
+// Loader: how the file is transformed when webpack uses it.
+// Need to install babel-core, babel-loader
+// Be careful! In this case we need to install babel-loader@7.1.1
+// Add inside the webpack config file the module
+// Create a babel config file
+
+// Common practice to put each React component in a file.

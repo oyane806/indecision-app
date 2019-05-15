@@ -4,12 +4,26 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "serve": "live-server public/",
+    "build": "webpack --watch",
+    "build-babel": "babel src/app.jsx --out-file=public/scripts/app.js --presets=env,react --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Oceane",
   "license": "ISC",
   "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.1",
     "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1"
+    "babel-preset-react": "^6.24.1",
+    "live-server": "^1.2.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "validator": "^10.11.0",
+    "webpack": "^4.31.0"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.2"
   }
 }
