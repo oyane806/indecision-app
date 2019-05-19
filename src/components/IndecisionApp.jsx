@@ -3,19 +3,42 @@ import AddOption from "./AddOption.jsx";
 import Header from "./Header.jsx";
 import Action from "./Action.jsx";
 import Options from "./Options.jsx";
-
+import OptionModal from "./OptionModal.jsx";
 
 export default class IndecisionApp extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
-        this.state = {
-            options: props.options
-        };
-        this.handlePick = this.handlePick.bind(this);
-        this.handleAddOption = this.handleAddOption.bind(this);
-        this.handleDeleteOption = this.handleDeleteOption.bind(this);
-    }
+    state = {
+        options: [], // options: props.options
+        selectedOption: undefined
+    };
+    handleDeleteOptions = () => {
+        this.setState(() => ({ options: [] }));
+    };
+    handleClearSelectedOption = () => {
+        this.setState(() => ({ selectedOption: undefined }));
+    };
+    handleDeleteOption = (optionToRemove) => {
+        this.setState((prevState) => ({
+            options: prevState.options.filter((option) => optionToRemove !== option)
+        }));
+    };
+    handlePick = () => {
+        const randomNum = Math.floor(Math.random() * this.state.options.length);
+        const option = this.state.options[randomNum];
+        this.setState(() => ({
+            selectedOption: option
+        }));
+    };
+    handleAddOption = (option) => {
+        // From here, we can access the option from the child element
+        if (!option) {
+            return "Enter valid value to add item";
+        } else if (this.state.options.indexOf(option) > -1) {
+            return "This option already exists";
+        }
+
+        this.setState((prevState) => ({ options: prevState.options.concat(option) }));
+        // We use concat here because we do not want to alter prevState
+    };
     componentDidMount() {
         console.log("fetching data");
         try {
@@ -41,38 +64,7 @@ export default class IndecisionApp extends React.Component {
     componentWillUnmount() {
         console.log("componentWillUnmount");
     }
-    // handleDeleteOptions() {
-    //     this.setState(() => {
-    //         return {
-    //             options: []
-    //         };
-    //     });
-    // }
-    // Better syntax
-    handleDeleteOptions() {
-        this.setState(() => ({ options: [] }));
-    }
-    handleDeleteOption(optionToRemove) {
-        this.setState((prevState) => ({
-            options: prevState.options.filter((option) => optionToRemove !== option)
-        }));
-    }
-    handlePick() {
-        const randomNum = Math.floor(Math.random() * this.state.options.length);
-        const option = this.state.options[randomNum];
-        alert(option);
-    }
-    handleAddOption(option) {
-        // From here, we can access the option from the child element
-        if (!option) {
-            return "Enter valid value to add item";
-        } else if (this.state.options.indexOf(option) > -1) {
-            return "This option already exists";
-        }
-
-        this.setState((prevState) => ({ options: prevState.options.concat(option) }));
-        // We use concat here because we do not want to alter prevState
-    }
+    
     render() {
         const subtitle = "Add some randomness in your life!";
 
@@ -91,6 +83,10 @@ export default class IndecisionApp extends React.Component {
                 />
                 <AddOption
                 handleAddOption={this.handleAddOption}
+                />
+                <OptionModal
+                    selectedOption={this.state.selectedOption}
+                    handleClearSelectedOption={this.handleClearSelectedOption}
                 />
             </div>
         );
