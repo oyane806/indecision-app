@@ -20,6 +20,9 @@ module.exports = {
 			"css-loader",
 			"sass-loader"
 			]
+		}, {
+			loader: "url-loader?limit=100000",
+			test: /\.png$/,
 		}]
 	},
 	devtool: "cheap-module-eval-source-map", // Source map
